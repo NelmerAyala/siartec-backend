@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 import {
   IsAlphanumeric,
   IsDate,
@@ -12,26 +13,13 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { IsUnique } from '../../utils/validation/is-unique';
 
 const passwordRegEx =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,20}$/;
 
-export class CreateUserDto {
-  /* 
-    -- id: number;
-    -- firstname: string;
-    -- lastname: string;
-    -- email: string;
-    -- password: string;
-    -- identity_document_letter: string;
-    -- identity_document: string;
-    -- birthdate: string;
-    -- constitution_date: string;
-    -- address: string;
-    phone_number: string;
-    last_connection: Date;
-  */
 
+export class CreateUserDto {
   @IsString()
   @MinLength(2, { message: 'Firstname must have atleast 2 characters.' })
   @IsNotEmpty()
@@ -42,8 +30,9 @@ export class CreateUserDto {
   @IsNotEmpty()
   lastname: string;
 
+  @IsUnique({ tableName: 'users', column: 'email' })
   @IsNotEmpty()
-  @IsEmail(null, { message: 'Please provide valid Email.' })
+  @IsEmail()
   email: string;
 
   @IsNotEmpty()
@@ -67,11 +56,9 @@ export class CreateUserDto {
   identity_document: string;
 
   @IsDate()
-  @IsNotEmpty()
   birthdate: string;
 
   @IsDate()
-  @IsNotEmpty()
   constitution_date: string;
 
   @IsAlphanumeric()
@@ -86,8 +73,14 @@ export class CreateUserDto {
   phone_number: string;
   // +58 414 0000000
 
-  // @IsTimeZone()
-  // last_connection: Date;
+  @IsTimeZone()
+  last_connection: Date;
+
+
+  /* 
+    Triggers Before and After 
+  */
+
 
   // @IsInt()
   // age: number;

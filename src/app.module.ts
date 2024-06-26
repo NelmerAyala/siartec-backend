@@ -4,10 +4,9 @@ import { config } from './config/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { TypeOrmConfigService } from './config/database.config';
-import { UsersModule } from './users/users.module';
 import { RolesModule } from './roles/roles.module';
 import { StatusModule } from './status/status.module';
-
+import { IsUniqueConstraint } from './utils/validation/is-unique-constraint';
 
 @Module({
   imports: [
@@ -19,20 +18,10 @@ import { StatusModule } from './status/status.module';
       imports: [ConfigModule],
       useClass: TypeOrmConfigService,
     }),
-    // TypeOrmModule.forRoot({
-    //   type:
-    //     host: 'localhost',
-    //   port: 5432,
-    //   password: 'simform',
-    //   username: 'postgres',
-    //   entities: [],
-    //   database: 'pgWithNest',
-    //   synchronize: true,
-    //   logging: true,
-    // }),
     UsersModule,
     RolesModule,
     StatusModule
   ],
+  providers: [IsUniqueConstraint]
 })
 export class AppModule { }

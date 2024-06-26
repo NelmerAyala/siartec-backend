@@ -1,5 +1,5 @@
 import { Status } from 'src/status/entities/status.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Users } from 'src/users/entities/user.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
@@ -38,16 +38,16 @@ export class Role {
     Table audit columns foreign keys 
   */
   @ManyToOne(() => Status, (statu) => statu.id_status_role_fk)
-  id_status: Status
+  status: Status
 
-  @ManyToOne(() => User, (user) => user.create_by_role_fk)
-  created_by: User
+  @ManyToOne(() => Users, (user) => user.create_by_role_fk)
+  created_by: Users
 
-  @ManyToOne(() => User, (user) => user.updated_by_role_fk)
-  updated_by: User
+  @ManyToOne(() => Users, (user) => user.updated_by_role_fk)
+  updated_by: Users
 
-  @ManyToOne(() => User, (user) => user.deleted_by_role_fk)
-  deleted_by: User
+  @ManyToOne(() => Users, (user) => user.deleted_by_role_fk)
+  deleted_by: Users
 
   /* 
     Table foreign keys columns
@@ -57,7 +57,7 @@ export class Role {
   /* 
     Relationship
   */
-  @OneToMany(() => User, (user) => user.id_role)
-  id_roles_user_fk: User[]
+  @OneToMany(() => Users, (user) => user.id_role)
+  id_roles_user_fk: Users[]
 
 }

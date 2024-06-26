@@ -3,7 +3,7 @@ import { Status } from 'src/status/entities/status.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class User {
+export class Users {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,7 +13,7 @@ export class User {
   @Column({ type: 'varchar', length: 30 })
   lastname: string;
 
-  @Column({ type: 'varchar', length: 40 })
+  @Column({ type: 'varchar', length: 40, unique: true })
   email: string;
 
   @Column({ type: 'varchar' })
@@ -26,20 +26,20 @@ export class User {
   identity_document: string;
 
   // natural contributors 
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   birthdate: string;
 
   // legal contributors
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   constitution_date: string;
 
-  @Column({ type: 'tinytext' })
+  @Column({ type: 'text' })
   address: string;
 
   @Column({ type: 'varchar', length: 15 })
   phone_number: string;
 
-  @Column({ type: 'timestamptz' })
+  @Column({ type: 'timestamptz', nullable: true })
   last_connection: Date;
 
 
@@ -60,16 +60,16 @@ export class User {
     Table audit columns foreign keys   
   */
   @ManyToOne(() => Status, (statu) => statu.id_status_user_fk)
-  id_status: Status
+  status: Status
 
-  @ManyToOne(() => User, (user) => user.create_by_user_fk)
-  created_by: User
+  @ManyToOne(() => Users, (user) => user.create_by_user_fk)
+  created_by: Users
 
-  @ManyToOne(() => User, (user) => user.updated_by_user_fk)
-  updated_by: User
+  @ManyToOne(() => Users, (user) => user.updated_by_user_fk)
+  updated_by: Users
 
-  @ManyToOne(() => User, (user) => user.deleted_by_user_fk)
-  deleted_by: User
+  @ManyToOne(() => Users, (user) => user.deleted_by_user_fk)
+  deleted_by: Users
 
 
   /* 
@@ -89,19 +89,19 @@ export class User {
     Relationship
   */
   // -- Users
-  @OneToMany(() => User, (user) => user.created_by)
-  create_by_user_fk: User[]
-  @OneToMany(() => User, (user) => user.updated_by)
-  updated_by_user_fk: User[]
-  @OneToMany(() => User, (user) => user.deleted_by)
-  deleted_by_user_fk: User[]
+  @OneToMany(() => Users, (user) => user.created_by)
+  create_by_user_fk: Users[]
+  @OneToMany(() => Users, (user) => user.updated_by)
+  updated_by_user_fk: Users[]
+  @OneToMany(() => Users, (user) => user.deleted_by)
+  deleted_by_user_fk: Users[]
 
   // -- Roles
-  @OneToMany(() => User, (user) => user.created_by)
-  create_by_role_fk: User[]
-  @OneToMany(() => User, (user) => user.updated_by)
-  updated_by_role_fk: User[]
-  @OneToMany(() => User, (user) => user.deleted_by)
-  deleted_by_role_fk: User[]
+  @OneToMany(() => Users, (user) => user.created_by)
+  create_by_role_fk: Users[]
+  @OneToMany(() => Users, (user) => user.updated_by)
+  updated_by_role_fk: Users[]
+  @OneToMany(() => Users, (user) => user.deleted_by)
+  deleted_by_role_fk: Users[]
 
 }
