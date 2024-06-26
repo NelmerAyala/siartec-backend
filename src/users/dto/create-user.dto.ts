@@ -16,7 +16,7 @@ import {
 import { IsUnique } from '../../utils/validation/is-unique';
 
 const passwordRegEx =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,20}$/;
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[0-9A-Za-zd@$!%*?&]{8,20}$/;
 
 
 export class CreateUserDto {

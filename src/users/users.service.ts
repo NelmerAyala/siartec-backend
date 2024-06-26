@@ -86,9 +86,10 @@ export class UsersService {
    * @param updateUserDto this is partial type of createUserDto.
    * @returns promise of udpate user
    */
-  updatePasswordUser(id: number, updatePasswordUserDto: UpdatePasswordUserDto): Promise<Users> {
+  async updatePasswordUser(id: number, updatePasswordUserDto: UpdatePasswordUserDto): Promise<Users> {
     const user: Users = new Users();
-    user.password = updatePasswordUserDto.password;
+    user.password = await hashPassword(updatePasswordUserDto.password);
+    // user.password = updatePasswordUserDto.password;
     user.id = id;
     return this.userRepository.save(user);
   }

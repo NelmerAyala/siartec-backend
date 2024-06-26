@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -60,6 +61,16 @@ export class UsersController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.updateUser(+id, updateUserDto);
+  }
+
+  /**
+   * we have used patch decorator with id param to get id from request
+   * so the API URL will be
+   * PATCH http://localhost:3000/user/:id
+   */
+  @Put('password/:id')
+  updatePassword(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.updatePasswordUser(+id, updateUserDto);
   }
 
   /**
