@@ -7,6 +7,7 @@ import { TypeOrmConfigService } from './config/database.config';
 import { RolesModule } from './roles/roles.module';
 import { StatusModule } from './status/status.module';
 import { IsUniqueConstraint } from './utils/validation/is-unique-constraint';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { IsUniqueConstraint } from './utils/validation/is-unique-constraint';
     }),
     UsersModule,
     RolesModule,
-    StatusModule
+    StatusModule,
+    AuthModule
   ],
   providers: [IsUniqueConstraint]
 })

@@ -56,6 +56,15 @@ export class UsersService {
   }
 
   /**
+   * this function used to get data of use whose email is passed in parameter
+   * @param email is type of varchar, which represent the email of user.
+   * @returns promise of user
+   */
+  findOneUserByEmail(email: string): Promise<Users> {
+    return this.userRepository.findOneBy({ email });
+  }
+
+  /**
    * this function is used to updated specific user whose id is passed in
    * parameter along with passed updated data
    * @param id is type of number, which represent the id of user.
@@ -67,14 +76,13 @@ export class UsersService {
     user.firstname = updateUserDto.firstname;
     user.lastname = updateUserDto.lastname;
     user.email = updateUserDto.email;
-    // user.password = updateUserDto.password;
     user.identity_document_letter = updateUserDto.identity_document_letter;
     user.identity_document = updateUserDto.identity_document;
     user.birthdate = updateUserDto.birthdate;
-    user.constitution_date = updateUserDto.constitution_date;
+    user.constitution_date = updateUserDto.constitution_date ? updateUserDto.constitution_date : null;
     user.address = updateUserDto.address;
     user.phone_number = updateUserDto.phone_number;
-    // user.last_connection = new Date();
+
     user.id = id;
     return this.userRepository.save(user);
   }
@@ -86,12 +94,14 @@ export class UsersService {
    * @param updateUserDto this is partial type of createUserDto.
    * @returns promise of udpate user
    */
-  async updatePasswordUser(id: number, updatePasswordUserDto: UpdatePasswordUserDto): Promise<Users> {
+  async updatePasswordUser(id: number, updatePasswordUserDto: UpdatePasswordUserDto): Promise<Object> {
     const user: Users = new Users();
-    user.password = await hashPassword(updatePasswordUserDto.password);
-    // user.password = updatePasswordUserDto.password;
-    user.id = id;
-    return this.userRepository.save(user);
+    // user.password = await hashPassword(updatePasswordUserDto.password);
+    // user.id = id;
+
+    this.userRepository.update(id, { "password": await hashPassword(updatePasswordUserDto.password) });
+
+    return { msg: 'Password update successful' }
   }
 
   /**

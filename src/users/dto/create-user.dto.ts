@@ -1,11 +1,13 @@
-import * as bcrypt from 'bcrypt';
 import {
   IsAlphanumeric,
   IsDate,
+  IsDateString,
   IsEmail,
   IsEnum,
   IsInt,
   IsNotEmpty,
+  IsOptional,
+  IsPhoneNumber,
   IsString,
   IsTimeZone,
   Length,
@@ -16,7 +18,7 @@ import {
 import { IsUnique } from '../../utils/validation/is-unique';
 
 const passwordRegEx =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[0-9A-Za-zd@$!%*?&]{8,20}$/;
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
 
 
 export class CreateUserDto {
@@ -51,29 +53,35 @@ export class CreateUserDto {
   identity_document_letter: string;
 
   @IsString()
-  @MaxLength(7, { message: 'Identity document must have atleast 7 characters.' })
+  @MinLength(7, { message: 'Identity document must have atleast 7 characters.' })
   @IsNotEmpty()
   identity_document: string;
 
-  @IsDate()
+  @IsDateString()
+  @IsNotEmpty()
+  @IsOptional()
   birthdate: string;
 
-  @IsDate()
+  @IsDateString()
+  @IsNotEmpty()
+  @IsOptional()
   constitution_date: string;
 
-  @IsAlphanumeric()
+
   @MinLength(5, { message: 'address must have atleast 5 characters.' })
   @MaxLength(255, { message: 'address must have a maximum of 255 characters.' })
   @IsNotEmpty()
   address: string;
 
-  @IsAlphanumeric()
+  @IsPhoneNumber()
   @Length(15, 15, { message: 'phone_number must have 15 characters.' })
   @IsNotEmpty()
   phone_number: string;
   // +58 414 0000000
 
   @IsTimeZone()
+  @IsNotEmpty()
+  @IsOptional()
   last_connection: Date;
 
 

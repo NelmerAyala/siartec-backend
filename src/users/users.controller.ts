@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdatePasswordUserDto, UpdateUserDto } from './dto/update-user.dto';
 
 /**
  * whatever the string pass in controller decorator it will be appended to
@@ -69,7 +69,7 @@ export class UsersController {
    * PATCH http://localhost:3000/user/:id
    */
   @Put('password/:id')
-  updatePassword(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  updatePassword(@Param('id') id: string, @Body() updateUserDto: UpdatePasswordUserDto) {
     return this.userService.updatePasswordUser(+id, updateUserDto);
   }
 
