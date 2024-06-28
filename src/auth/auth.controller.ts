@@ -1,11 +1,32 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UseGuards, Request, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
+import { AuthAppGuard } from './auth.guard';
+import { AuthGuard } from '@nestjs/passport';
+import { AuthGoogleLoginDto } from './dto/google-auth.dto';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('sign-in')
+  signIn(@Body() signInDto: CreateAuthDto) {
+    return this.authService.signIn(signInDto.email, signInDto.password);
+  }
+
+  @UseGuards(AuthAppGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
+
+  @Post('sign-in/google')
+  @HttpCode(200)
+  googleLogin(@Body() body: AuthGoogleLoginDto) {
+    return this.authService.googleLogin(body);
+  }
 
   @Post()
   create(@Body() createAuthDto: CreateAuthDto) {
