@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UseGuards, Request, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Request, UseGuards, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { AuthAppGuard } from './auth.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthGoogleLoginDto } from './dto/google-auth.dto';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -12,8 +13,15 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('sign-in')
-  signIn(@Body() signInDto: CreateAuthDto) {
-    return this.authService.signIn(signInDto.email, signInDto.password);
+  signIn(@Body() signInDto: CreateAuthDto, @Res() response: Response) {
+    // signIn(@Body() signInDto: CreateAuthDto) {
+    const dataResponse = this.authService.signIn(signInDto.email, signInDto.password);
+    response.status(200).json({
+      message: 'Login success',
+      dataResponse
+    });
+
+    // return this.authService.signIn(signInDto.email, signInDto.password);
   }
 
   @UseGuards(AuthAppGuard)

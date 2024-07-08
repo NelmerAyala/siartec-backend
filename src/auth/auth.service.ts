@@ -12,10 +12,10 @@ export class AuthService {
 
   async signIn(email: string, passwordReq: string): Promise<Object> {
     const user = await this.usersService.findOneUserByEmail(email);
-    console.log(user)
+    // console.log(user)
     if (user === null) return new UnauthorizedException(`'${email}' not found email.`);
     if (!await bcrypt.compare(passwordReq, user?.password)) {
-      return new UnauthorizedException(`'${passwordReq}' Incorrect password error.`);
+      return new UnauthorizedException(`Incorrect password error.`);
     }
     else {
       // const { password, ...result } = user;

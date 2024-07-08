@@ -14,7 +14,7 @@ async function bootstrap() {
 
   ));
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-
+  app.enableCors();
   await app.listen(port);
   Logger.log(`~ Application is running on: ${await app.getUrl()}`);
 }
