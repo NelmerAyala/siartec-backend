@@ -5,6 +5,7 @@ import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthGoogleLoginDto } from './dto/google-auth.dto';
+import { AuthGoogleEmailDto } from './dto/google-auth-email.dto';
 const { OAuth2Client } = require('google-auth-library');
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
 
   async signIn(email: string, passwordReq: string): Promise<Object> {
     const user = await this.usersService.findOneUserByEmail(email);
-    // console.log(user)
+    console.log(user)
     if (user === null) return new UnauthorizedException(`'${email}' not found email.`);
     if (!await bcrypt.compare(passwordReq, user?.password)) {
       return new UnauthorizedException(`Incorrect password error.`);
@@ -47,6 +48,20 @@ export class AuthService {
     const payload = { sub: user.id, email: user.email };
     return {
       access_token: await this.jwtService.signAsync(payload)
+    }
+  }
+
+  async googleEmailLogin(body: AuthGoogleEmailDto) {
+    const client = new OAuth2Client(process.env.CLIENT_ID);
+    let google_account = { email: "" };
+
+
+    const user = await this.usersService.findOneUserByEmail(body.email);
+
+    if (user === null) return new UnauthorizedException(`'${google_account?.email}' not found email.`);
+
+    return {
+      user
     }
   }
 

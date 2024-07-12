@@ -6,6 +6,7 @@ import { AuthAppGuard } from './auth.guard';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthGoogleLoginDto } from './dto/google-auth.dto';
 import { Response } from 'express';
+import { AuthGoogleEmailDto } from './dto/google-auth-email.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -34,6 +35,12 @@ export class AuthController {
   @HttpCode(200)
   googleLogin(@Body() body: AuthGoogleLoginDto) {
     return this.authService.googleLogin(body);
+  }
+
+  @Post('sign-in/google/email')
+  @HttpCode(200)
+  googleEmail(@Body() body: AuthGoogleEmailDto) {
+    return this.authService.googleEmailLogin(body);
   }
 
   @Post()
