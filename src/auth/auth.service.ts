@@ -12,57 +12,60 @@ export class AuthService {
   constructor(private usersService: UsersService, private jwtService: JwtService) { }
 
   async signIn(email: string, passwordReq: string): Promise<Object> {
-    const user = await this.usersService.findOneUserByEmail(email);
-    console.log(user)
-    if (user === null) return new UnauthorizedException(`'${email}' not found email.`);
-    if (!await bcrypt.compare(passwordReq, user?.password)) {
-      return new UnauthorizedException(`Incorrect password error.`);
+    const getUser = await this.usersService.findOneUserByEmail(email);
+    if (getUser === null) return new UnauthorizedException(`'${email}' correo electrónico no encontrado.`);
+    const { password, ...user } = getUser;
+
+    if (!await bcrypt.compare(passwordReq, password)) {
+      return new UnauthorizedException(`Error - Contraseña incorrecta.`);
     }
     else {
-      // const { password, ...result } = user;
-
       const payload = { sub: user.id, email: user.email };
-      return {
+      const resp = {
+        user,
         access_token: await this.jwtService.signAsync(payload),
-      };
+      }
+      return resp;
     }
   }
 
   async googleLogin(body: AuthGoogleLoginDto) {
     const client = new OAuth2Client(process.env.CLIENT_ID);
-    let google_account = { email: "" };
+    let google_account: { email: string };
     async function verify() {
       const ticket = await client.verifyIdToken({
         idToken: body.googleTokenId,
         audience: process.env.CLIENT_ID
       });
       google_account = ticket.getPayload();
-      console.log(google_account, "google_account");
+
     }
     await verify().catch(console.error);
 
     const user = await this.usersService.findOneUserByEmail(google_account?.email);
 
-    if (user === null) return new UnauthorizedException(`'${google_account?.email}' not found email.`);
+    if (user === null) return new UnauthorizedException(`'${google_account?.email}' correo electrónico no encontrado.`);
 
     const payload = { sub: user.id, email: user.email };
-    return {
-      access_token: await this.jwtService.signAsync(payload)
+    const resp = {
+      user,
+      access_token: await this.jwtService.signAsync(payload),
     }
+    return resp;
   }
 
   async googleEmailLogin(body: AuthGoogleEmailDto) {
-    const client = new OAuth2Client(process.env.CLIENT_ID);
-    let google_account = { email: "" };
+    const getUser = await this.usersService.findOneUserByEmail(body.email);
 
+    if (getUser === null) return new UnauthorizedException(`'${body.email}' correo electrónico no encontrado.`);
+    const { password, ...user } = getUser;
 
-    const user = await this.usersService.findOneUserByEmail(body.email);
-
-    if (user === null) return new UnauthorizedException(`'${google_account?.email}' not found email.`);
-
-    return {
-      user
+    const payload = { sub: user.id, email: user.email };
+    const resp = {
+      user,
+      access_token: await this.jwtService.signAsync(payload),
     }
+    return resp;
   }
 
 

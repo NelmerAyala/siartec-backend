@@ -12,17 +12,18 @@ import { AuthGoogleEmailDto } from './dto/google-auth-email.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
-  @HttpCode(HttpStatus.OK)
   @Post('sign-in')
-  signIn(@Body() signInDto: CreateAuthDto, @Res() response: Response) {
-    // signIn(@Body() signInDto: CreateAuthDto) {
-    const dataResponse = this.authService.signIn(signInDto.email, signInDto.password);
-    response.status(200).json({
-      message: 'Login success',
-      dataResponse
-    });
+  async signIn(@Body() signInDto: CreateAuthDto, @Res() response: Response) {
+    const data = await this.authService.signIn(signInDto.email, signInDto.password);
+    console.log("data in signIn: " + data)
+    return response.status(200).json(data);
+  }
 
-    // return this.authService.signIn(signInDto.email, signInDto.password);
+  @Post('sign-in/google/email')
+  async googleEmail(@Body() body: AuthGoogleEmailDto, @Res() response: Response) {
+    const data = await this.authService.googleEmailLogin(body);
+    console.log("data in googleEmail: " + data)
+    return response.status(200).json(data);
   }
 
   @UseGuards(AuthAppGuard)
@@ -35,12 +36,6 @@ export class AuthController {
   @HttpCode(200)
   googleLogin(@Body() body: AuthGoogleLoginDto) {
     return this.authService.googleLogin(body);
-  }
-
-  @Post('sign-in/google/email')
-  @HttpCode(200)
-  googleEmail(@Body() body: AuthGoogleEmailDto) {
-    return this.authService.googleEmailLogin(body);
   }
 
   @Post()
