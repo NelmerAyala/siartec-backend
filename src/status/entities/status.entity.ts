@@ -1,3 +1,4 @@
+import { Privilege } from 'src/privileges/entities/privilege.entity';
 import { Role } from 'src/roles/entities/role.entity';
 import { Users } from 'src/users/entities/user.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
@@ -37,16 +38,16 @@ export class Status {
   /* 
     Table audit columns foreign keys 
   */
-  @ManyToOne(() => Status, (statu) => statu.id_status_role_fk)
+  @ManyToOne(() => Status, (statu) => statu.id_status_status_fk)
   status: Status
 
-  @ManyToOne(() => Users, (user) => user.create_by_role_fk)
+  @ManyToOne(() => Users, (user) => user.create_by_status_fk)
   created_by: Users
 
-  @ManyToOne(() => Users, (user) => user.updated_by_role_fk)
+  @ManyToOne(() => Users, (user) => user.updated_by_status_fk)
   updated_by: Users
 
-  @ManyToOne(() => Users, (user) => user.deleted_by_role_fk)
+  @ManyToOne(() => Users, (user) => user.deleted_by_status_fk)
   deleted_by: Users
 
 
@@ -59,5 +60,18 @@ export class Status {
   id_status_user_fk: Users[]
   @OneToMany(() => Role, (role) => role.status)
   id_status_role_fk: Role[]
+
+  // -- Contributors Types
+  @OneToMany(() => Status, (statu) => statu.status)
+  id_status_contributors_types_fk: Status[]
+
+  // -- Contributors Types
+  @OneToMany(() => Privilege, (privilege) => privilege.status)
+  id_status_privilege_fk: Privilege[]
+
+  // -- Roles Privileges
+  @OneToMany(() => Privilege, (privilege) => privilege.status)
+  id_status_role_privilege_fk: Privilege[]
+
 
 }

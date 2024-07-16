@@ -1,3 +1,4 @@
+import { ContributorsType } from 'src/contributors_types/entities/contributors_type.entity';
 import { Role } from 'src/roles/entities/role.entity';
 import { Status } from 'src/status/entities/status.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
@@ -42,6 +43,9 @@ export class Users {
   @Column({ type: 'timestamptz', nullable: true })
   last_connection: Date;
 
+  @Column({ type: 'boolean', default: false })
+  personal_signature: Boolean;
+
 
   /* 
     Table audit columns 
@@ -76,10 +80,10 @@ export class Users {
     Table foreign keys columns
   */
   @ManyToOne(() => Role, (rol) => rol.id_roles_user_fk)
-  id_role: Role
+  role: Role
 
-  // @ManyToOne(() => ContributorsType, (type) => type.users)
-  // id_contributor_type: ContributorsTypes
+  @ManyToOne(() => ContributorsType, (type) => type.id_contributor_type_user_fk)
+  contributor_type: ContributorsType
 
   // @ManyToOne(() => Municipalities, (municipality) => municipality.users)
   // id_municipality: Municipalities
@@ -103,5 +107,37 @@ export class Users {
   updated_by_role_fk: Users[]
   @OneToMany(() => Users, (user) => user.deleted_by)
   deleted_by_role_fk: Users[]
+
+  // -- Status
+  @OneToMany(() => Users, (user) => user.created_by)
+  create_by_status_fk: Users[]
+  @OneToMany(() => Users, (user) => user.updated_by)
+  updated_by_status_fk: Users[]
+  @OneToMany(() => Users, (user) => user.deleted_by)
+  deleted_by_status_fk: Users[]
+
+  // -- Contributors Types
+  @OneToMany(() => Users, (user) => user.created_by)
+  create_by_contributors_types_fk: Users[]
+  @OneToMany(() => Users, (user) => user.updated_by)
+  updated_by_contributors_types_fk: Users[]
+  @OneToMany(() => Users, (user) => user.deleted_by)
+  deleted_by_contributors_types_fk: Users[]
+
+  // -- Contributors Types
+  @OneToMany(() => Users, (user) => user.created_by)
+  create_by_privilege_fk: Users[]
+  @OneToMany(() => Users, (user) => user.updated_by)
+  updated_by_privilege_fk: Users[]
+  @OneToMany(() => Users, (user) => user.deleted_by)
+  deleted_by_privilege_fk: Users[]
+
+  // -- Roles Privileges
+  @OneToMany(() => Users, (user) => user.created_by)
+  create_by_role_privilege_fk: Users[]
+  @OneToMany(() => Users, (user) => user.updated_by)
+  updated_by_role_privilege_fk: Users[]
+  @OneToMany(() => Users, (user) => user.deleted_by)
+  deleted_by_role_privilege_fk: Users[]
 
 }

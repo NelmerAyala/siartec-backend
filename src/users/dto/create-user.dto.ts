@@ -6,6 +6,7 @@ import {
   IsEnum,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsPhoneNumber,
   IsString,
@@ -16,6 +17,8 @@ import {
   MinLength,
 } from 'class-validator';
 import { IsUnique } from '../../utils/validation/is-unique';
+import { ContributorsType } from 'src/contributors_types/entities/contributors_type.entity';
+import { Role } from 'src/roles/entities/role.entity';
 
 const passwordRegEx =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
@@ -83,6 +86,14 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsOptional()
   last_connection: Date;
+
+  @IsNumber()
+  @IsNotEmpty()
+  contributor_type: ContributorsType;
+
+  @IsNumber()
+  @IsNotEmpty()
+  role: Role;
 
 
   /* 

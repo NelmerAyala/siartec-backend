@@ -1,11 +1,11 @@
-import { Privilege } from 'src/privileges/entities/privilege.entity';
+import { Role } from 'src/roles/entities/role.entity';
 import { RolesPrivilege } from 'src/roles_privileges/entities/roles_privilege.entity';
 import { Status } from 'src/status/entities/status.entity';
 import { Users } from 'src/users/entities/user.entity';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Role {
+export class Privilege {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -30,16 +30,16 @@ export class Role {
   /* 
     Table audit columns foreign keys 
   */
-  @ManyToOne(() => Status, (statu) => statu.id_status_role_fk)
+  @ManyToOne(() => Status, (statu) => statu.id_status_privilege_fk)
   status: Status
 
-  @ManyToOne(() => Users, (user) => user.create_by_role_fk)
+  @ManyToOne(() => Users, (user) => user.create_by_privilege_fk)
   created_by: Users
 
-  @ManyToOne(() => Users, (user) => user.updated_by_role_fk)
+  @ManyToOne(() => Users, (user) => user.updated_by_privilege_fk)
   updated_by: Users
 
-  @ManyToOne(() => Users, (user) => user.deleted_by_role_fk)
+  @ManyToOne(() => Users, (user) => user.deleted_by_privilege_fk)
   deleted_by: Users
 
   /* 
@@ -50,10 +50,9 @@ export class Role {
   /* 
     Relationship
   */
-  @OneToMany(() => Users, (user) => user.role)
-  id_roles_user_fk: Users[]
 
-  @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.role)
-  id_roles_privileges_role_fk: RolesPrivilege[];
+  @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.privilege)
+  id_roles_privileges_privilege_fk: RolesPrivilege[];
 
 }
+

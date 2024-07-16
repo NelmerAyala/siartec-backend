@@ -11,6 +11,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordUserDto, UpdateUserDto } from './dto/update-user.dto';
+import bcrypt from 'bcrypt';
 
 /**
  * whatever the string pass in controller decorator it will be appended to
@@ -30,6 +31,10 @@ export class UsersController {
    */
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
+    // const min = 1;
+    // const max = 100000;
+    // const saltRounds = Math.floor(Math.random() * (max - min) + min);
+    // createUserDto.password = bcrypt.hashSync(createUserDto.password, saltRounds);
     return this.userService.createUser(createUserDto);
   }
 

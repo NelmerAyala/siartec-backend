@@ -34,6 +34,8 @@ export class UsersService {
     user.constitution_date = createUserDto.constitution_date;
     user.address = createUserDto.address;
     user.phone_number = createUserDto.phone_number;
+    user.contributor_type = createUserDto.contributor_type;
+    user.role = createUserDto.role;
 
     return this.userRepository.save(user);
   }

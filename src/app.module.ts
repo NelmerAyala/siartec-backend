@@ -8,6 +8,9 @@ import { RolesModule } from './roles/roles.module';
 import { StatusModule } from './status/status.module';
 import { IsUniqueConstraint } from './utils/validation/is-unique-constraint';
 import { AuthModule } from './auth/auth.module';
+import { ContributorsTypesModule } from './contributors_types/contributors_types.module';
+import { PrivilegesModule } from './privileges/privileges.module';
+import { RolesPrivilegesModule } from './roles_privileges/roles_privileges.module';
 
 @Module({
   imports: [
@@ -22,7 +25,10 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     RolesModule,
     StatusModule,
-    AuthModule
+    AuthModule,
+    ContributorsTypesModule,
+    PrivilegesModule,
+    RolesPrivilegesModule
   ],
   providers: [IsUniqueConstraint]
 })
