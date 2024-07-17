@@ -7,7 +7,7 @@ export const config = (): ConfigProps => ({
     httpTimeout: 1000,
   },
   ormconfig: {
-    ormDbType: process.env.ORM_DB_TYPE || 'localhost',
+    ormDbType: process.env.ORM_DB_TYPE || 'postgres',
     ormDbEntities: process.env.ORM_DB_ENTITIES.split(",") || [],
     ormSynchronize: process.env.ORM_SYNCHRONIZE === 'true' ? true : false || true,
     ormLogging: process.env.ORM_LOGGING === 'true' ? true : false || true,
@@ -15,12 +15,11 @@ export const config = (): ConfigProps => ({
   },
   postgresqldb: {
     database: {
-      // connectionString: process.env.ORD || 'mongodb://localhost:27017',
-      databaseHost: process.env.DB_HOST || 'localhost',
+      databaseHost: process.env.DB_HOST || 'siartec-db',
       databasePort: parseInt(process.env.DB_PORT) || 5432,
-      databasePassword: process.env.DB_PASSWORD || 'admin',
-      databaseUsername: process.env.DB_USERNAME || 'postgres',
-      databaseName: process.env.DB_DATABASE || 'siartecqa'
+      databasePassword: process.env.DB_PASSWORD || '514RT3C',
+      databaseUsername: process.env.DB_USERNAME || 'siartecapp',
+      databaseName: process.env.DB_DATABASE || 'siartec'
     }
   }
 });
