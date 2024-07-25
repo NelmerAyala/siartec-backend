@@ -6,3 +6,9 @@
   nest new <name-app>
 
 # create new app
+
+instalé
+npm i bcryptjs
+
+desintalé
+npm uninstall bcrypt
