@@ -16,7 +16,7 @@ export const config = (): ConfigProps => ({
   postgresqldb: {
     database: {
       databaseHost: process.env.DB_HOST || 'siartec-db',
-      databasePort: parseInt(process.env.DB_PORT) || 5433,
+      databasePort: parseInt(process.env.DB_PORT) || 5432,
       databasePassword: process.env.DB_PASSWORD || '514RT3C',
       databaseUsername: process.env.DB_USERNAME || 'siartecapp',
       databaseName: process.env.DB_DATABASE || 'siartec'

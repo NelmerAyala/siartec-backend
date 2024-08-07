@@ -12,6 +12,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordUserDto, UpdateUserDto } from './dto/update-user.dto';
 import bcrypt from 'bcrypt';
+import { sendEmail } from 'src/common/sendEmails';
 
 /**
  * whatever the string pass in controller decorator it will be appended to
@@ -86,6 +87,19 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.removeUser(+id);
+  }
+
+  @Post('send-email')
+  async sendEmailGet() {
+    let req = {
+      body: {
+        contirbutor_email: 'NAASTECNOLOGIA@GMAIL.COM',
+        contirbutor_user: 'NelmerAyala@gmail.com',
+        contirbutor_names: 'Nelmer Ayala',
+        contirbutor_password: 'Nelmer Ayala',
+      }
+    }
+    return await sendEmail(req);
   }
 }
 
