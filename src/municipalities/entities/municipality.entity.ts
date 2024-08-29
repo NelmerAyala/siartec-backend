@@ -1,6 +1,4 @@
-// import { Role } from 'src/roles/entities/role.entity';
 import { Parishes } from 'src/parishes/entities/parish.entity';
-import { RolesPrivilege } from 'src/roles_privileges/entities/roles_privilege.entity';
 import { Status } from 'src/status/entities/status.entity';
 import { Users } from 'src/users/entities/user.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
