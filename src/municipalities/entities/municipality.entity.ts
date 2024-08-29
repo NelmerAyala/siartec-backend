@@ -1,11 +1,12 @@
-import { AuditableProcess } from 'src/auditable_processes/entities/auditable_process.entity';
+// import { Role } from 'src/roles/entities/role.entity';
+import { Parishes } from 'src/parishes/entities/parish.entity';
 import { RolesPrivilege } from 'src/roles_privileges/entities/roles_privilege.entity';
 import { Status } from 'src/status/entities/status.entity';
 import { Users } from 'src/users/entities/user.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Privilege {
+export class Municipalities {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -51,11 +52,11 @@ export class Privilege {
     Relationship
   */
 
-  @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.privilege)
-  id_privilege_role_privilege_fk: RolesPrivilege[];
+  // @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.privilege)
+  // id_roles_privileges_privilege_fk: RolesPrivilege[];
 
-  @OneToMany(() => AuditableProcess, auditable_process => auditable_process.privilege)
-  id_privilege_auditable_process_fk: AuditableProcess[];
+  @OneToMany(() => Parishes, parish => parish.municipality)
+  id_parish_municipality_fk: Parishes[];
+
 
 }
-

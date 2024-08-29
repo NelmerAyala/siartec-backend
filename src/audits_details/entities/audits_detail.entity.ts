@@ -1,19 +1,32 @@
 import { AuditableProcess } from 'src/auditable_processes/entities/auditable_process.entity';
-import { RolesPrivilege } from 'src/roles_privileges/entities/roles_privilege.entity';
+import { Audit } from 'src/audits/entities/audit.entity';
+import { Privilege } from 'src/privileges/entities/privilege.entity';
 import { Status } from 'src/status/entities/status.entity';
 import { Users } from 'src/users/entities/user.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Privilege {
+export class AuditsDetail {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 20 })
-  code: string;
+  @Column({ type: 'number' })
+  recordId: number;
 
   @Column({ type: 'varchar' })
-  description: string;
+  at_table: string;
+
+  @Column({ type: 'varchar' })
+  at_column: string;
+
+  @Column({ type: 'varchar' })
+  old_value: string;
+
+  @Column({ type: 'varchar' })
+  new_value: string;
+
+  @Column({ type: 'varchar' })
+  data_type: string;
 
   /* 
     Table audit columns 
@@ -45,17 +58,15 @@ export class Privilege {
   /* 
     Table foreign keys columns
   */
-
+  @ManyToOne(() => Audit, (audit) => audit.id_audit_audit_detail_fk)
+  audit: Audit
 
   /* 
     Relationship
   */
 
-  @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.privilege)
-  id_privilege_role_privilege_fk: RolesPrivilege[];
-
-  @OneToMany(() => AuditableProcess, auditable_process => auditable_process.privilege)
-  id_privilege_auditable_process_fk: AuditableProcess[];
+  // @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.privilege)
+  // id_roles_privileges_privilege_fk: RolesPrivilege[];
 
 }
 
