@@ -11,6 +11,11 @@ import { AuthModule } from './auth/auth.module';
 import { ContributorsTypesModule } from './contributors_types/contributors_types.module';
 import { PrivilegesModule } from './privileges/privileges.module';
 import { RolesPrivilegesModule } from './roles_privileges/roles_privileges.module';
+import { ParishesModule } from './parishes/parishes.module';
+import { MunicipalitiesModule } from './municipalities/municipalities.module';
+import { AuditsModule } from './audits/audits.module';
+import { AuditableProcessesModule } from './auditable_processes/auditable_processes.module';
+import { AuditsDetailsModule } from './audits_details/audits_details.module';
 
 @Module({
   imports: [
@@ -28,7 +33,12 @@ import { RolesPrivilegesModule } from './roles_privileges/roles_privileges.modul
     AuthModule,
     ContributorsTypesModule,
     PrivilegesModule,
-    RolesPrivilegesModule
+    RolesPrivilegesModule,
+    ParishesModule,
+    MunicipalitiesModule,
+    AuditsModule,
+    AuditableProcessesModule,
+    AuditsDetailsModule
   ],
   providers: [IsUniqueConstraint]
 })

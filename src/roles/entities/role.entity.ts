@@ -51,7 +51,7 @@ export class Role {
     Relationship
   */
   @OneToMany(() => Users, (user) => user.role)
-  id_roles_user_fk: Users[]
+  id_roles_user_fk: Users[];
 
   @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.role)
   id_roles_privileges_role_fk: RolesPrivilege[];
