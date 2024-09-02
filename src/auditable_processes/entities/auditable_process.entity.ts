@@ -30,16 +30,16 @@ export class AuditableProcess {
   /* 
     Table audit columns foreign keys 
   */
-  @ManyToOne(() => Status, (statu) => statu.id_status_privilege_fk)
+  @ManyToOne(() => Status, (statu) => statu.id_status_auditable_process_fk)
   status: Status
 
-  @ManyToOne(() => Users, (user) => user.create_by_privilege_fk)
+  @ManyToOne(() => Users, (user) => user.create_by_auditable_process_fk)
   created_by: Users
 
-  @ManyToOne(() => Users, (user) => user.updated_by_privilege_fk)
+  @ManyToOne(() => Users, (user) => user.updated_by_auditable_process_fk)
   updated_by: Users
 
-  @ManyToOne(() => Users, (user) => user.deleted_by_privilege_fk)
+  @ManyToOne(() => Users, (user) => user.deleted_by_auditable_process_fk)
   deleted_by: Users
 
   /* 

@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   Put,
+  Res,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordUserDto, UpdateUserDto } from './dto/update-user.dto';
 import bcrypt from 'bcrypt';
 import { sendEmail } from 'src/common/sendEmails';
+import { Response } from 'express';
 
 /**
  * whatever the string pass in controller decorator it will be appended to
@@ -75,8 +77,15 @@ export class UsersController {
    * PATCH http://localhost:3000/user/:id
    */
   @Put('password/:id')
-  updatePassword(@Param('id') id: string, @Body() updateUserDto: UpdatePasswordUserDto) {
-    return this.userService.updatePasswordUser(+id, updateUserDto);
+  updatePassword(@Param('id') id: string, @Body() updateUserDto: UpdatePasswordUserDto, @Res() response: Response) {
+
+    if (updateUserDto.passwordNew !== updateUserDto.passwordNewConfirm) {
+      return response.status(400).json({ msg: "La nueva contraseña no coincide con su confirmación" });
+    }
+    if (updateUserDto.passwordCurrent === updateUserDto.passwordNewConfirm) {
+      return response.status(400).json({ msg: "La nueva contraseña no puede ser igual a que está insertando como actual" });
+    }
+    return this.userService.updatePasswordUser(+id, updateUserDto, response);
   }
 
   /**
@@ -101,6 +110,11 @@ export class UsersController {
     }
     return await sendEmail(req);
   }
+
+  // @Get('data-profile')
+  // getDataProfile(req: any) {
+  //   return this.userService.findOneUser(req.id);
+  // }
 }
 
 // import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';

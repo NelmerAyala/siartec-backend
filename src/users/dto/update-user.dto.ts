@@ -20,11 +20,7 @@ import { CreateUserDto } from './create-user.dto';
 import { IsUnique } from '../../utils/validation/is-unique';
 import { Users } from '../entities/user.entity';
 
-const passwordRegEx =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[0-9A-Za-zd@$!%*?&]{8,20}$/;
-
-// export class UpdateUserDto extends PartialType(CreateUserDto) { }
-// export class UpdatePasswordUserDto extends PartialType(CreateUserDto) { }
+const passwordRegEx = ``;
 
 export class UpdateUserDto {
   @IsString()
@@ -77,13 +73,33 @@ export class UpdateUserDto {
 export class UpdatePasswordUserDto {
 
   @IsNotEmpty()
-  @Matches(passwordRegEx, {
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[0-9A-Za-zd@$!%*?&]{8,20}$/, {
     message: `Password must contain Minimum 8 and maximum 20 characters, 
     at least one uppercase letter, 
     one lowercase letter, 
     one number and 
     one special character`,
   })
-  password: string;
+  passwordCurrent: string;
+
+  @IsNotEmpty()
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[0-9A-Za-zd@$!%*?&]{8,20}$/, {
+    message: `Password must contain Minimum 8 and maximum 20 characters, 
+    at least one uppercase letter, 
+    one lowercase letter, 
+    one number and 
+    one special character`,
+  })
+  passwordNew: string;
+
+  @IsNotEmpty()
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*?&])[0-9A-Za-zd@$!%*?&]{8,20}$/, {
+    message: `Password must contain Minimum 8 and maximum 20 characters, 
+    at least one uppercase letter, 
+    one lowercase letter, 
+    one number and 
+    one special character`,
+  })
+  passwordNewConfirm: string;
 
 }

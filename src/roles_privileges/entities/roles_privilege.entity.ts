@@ -54,6 +54,6 @@ export class RolesPrivilege {
   @ManyToOne(() => Role, (role) => role.id_roles_privileges_role_fk)
   public role: Role
 
-  @ManyToOne(() => Privilege, (privilege) => privilege.id_roles_privileges_privilege_fk)
+  @ManyToOne(() => Privilege, (privilege) => privilege.id_privilege_role_privilege_fk)
   public privilege: Privilege
 }

@@ -4,7 +4,8 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto, UpdatePasswordUserDto } from './dto/update-user.dto';
 import { Users } from './entities/user.entity';
-import { hashPassword } from 'src/utils/bcrypt.utils';
+import { hashPassword, compareHashPassword } from 'src/utils/bcrypt.utils';
+import { Response } from 'express';
 
 @Injectable()
 export class UsersService {
@@ -96,14 +97,18 @@ export class UsersService {
    * @param updateUserDto this is partial type of createUserDto.
    * @returns promise of udpate user
    */
-  async updatePasswordUser(id: number, updatePasswordUserDto: UpdatePasswordUserDto): Promise<Object> {
-    const user: Users = new Users();
-    // user.password = await hashPassword(updatePasswordUserDto.password);
-    // user.id = id;
+  async updatePasswordUser(id: number, updatePasswordUserDto: UpdatePasswordUserDto, response: Response): Promise<Object> {
 
-    this.userRepository.update(id, { "password": await hashPassword(updatePasswordUserDto.password) });
+    const user = await this.userRepository.findOneBy({ id });
 
-    return { msg: 'Password update successful' }
+    const verifiedPassword = await compareHashPassword(updatePasswordUserDto.passwordCurrent, user.password);
+
+    if (!verifiedPassword) {
+      return response.status(400).json({ msg: "La contraseña actual no es correcta, por favor verifique!" });
+    }
+    this.userRepository.update(id, { "password": await hashPassword(updatePasswordUserDto.passwordNewConfirm) });
+
+    return response.status(200).json({ msg: "Contraseña actualizada satisfactoriamente." });
   }
 
   /**

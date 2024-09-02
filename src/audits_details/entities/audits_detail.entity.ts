@@ -10,7 +10,7 @@ export class AuditsDetail {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'number' })
+  @Column({ type: 'int' })
   recordId: number;
 
   @Column({ type: 'varchar' })

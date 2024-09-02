@@ -6,6 +6,7 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { UsersService } from 'src/users/users.service';
 import { AuthGoogleLoginDto } from './dto/google-auth.dto';
 import { AuthGoogleEmailDto } from './dto/google-auth-email.dto';
+import { jwtConstants } from './constants';
 const { OAuth2Client } = require('google-auth-library');
 @Injectable()
 export class AuthService {
@@ -23,7 +24,7 @@ export class AuthService {
       const payload = { sub: user.id, email: user.email };
       const resp = {
         user,
-        access_token: await this.jwtService.signAsync(payload),
+        access_token: await this.jwtService.signAsync(payload, { secret: jwtConstants.secret }),
       }
       return resp;
     }
