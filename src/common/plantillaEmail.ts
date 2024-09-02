@@ -1,4 +1,6 @@
-<html>
+const plantillaEmail = async (req: any) => {
+
+    return `<html>
 
 <head>
   <meta name="encoding" charset="utf-8" />
@@ -63,4 +65,7 @@
   </div>
 </body>
 
-</html>
+</html>`
+  };
+  
+  export default plantillaEmail;

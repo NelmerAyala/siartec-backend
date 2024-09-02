@@ -15,6 +15,7 @@ import { UpdatePasswordUserDto, UpdateUserDto } from './dto/update-user.dto';
 import bcrypt from 'bcrypt';
 import { sendEmail } from 'src/common/sendEmails';
 import { Response } from 'express';
+import { ResetPasswordUserDto } from './dto/reset-password-user.dto';
 
 /**
  * whatever the string pass in controller decorator it will be appended to
@@ -98,8 +99,9 @@ export class UsersController {
     return this.userService.removeUser(+id);
   }
 
-  @Post('send-email')
-  async sendEmailGet() {
+
+  @Post('reset-password')
+  async sendEmailGet(@Body() resetPassword: ResetPasswordUserDto) {
     let req = {
       body: {
         contirbutor_email: 'NAASTECNOLOGIA@GMAIL.COM',
