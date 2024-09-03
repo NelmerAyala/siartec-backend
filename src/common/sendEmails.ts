@@ -27,10 +27,10 @@ export const sendEmail = async (
         return { status: 400, msg: result }
       } else {
         console.log("Email sent successfully - ok");
-        result = 'Email sent successfully';
-        return { status: 200, msg: result }
+        result = 'Correo electrónico enviado satisfactoriamente';
       }
     });
+    return { status: 200, msg: result }
   } catch (error) {
     console.log({ error });
     return { error }
