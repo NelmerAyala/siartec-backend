@@ -9,12 +9,12 @@ import {
   Put,
   Res,
 } from '@nestjs/common';
+import * as bcrypt from 'bcryptjs';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordUserDto, UpdateUserDto } from './dto/update-user.dto';
-import bcrypt from 'bcrypt';
 import { sendEmail } from 'src/common/sendEmails';
-import { Response } from 'express';
+import { response, Response } from 'express';
 import { ResetPasswordUserDto } from './dto/reset-password-user.dto';
 
 /**
@@ -101,22 +101,34 @@ export class UsersController {
 
 
   @Post('reset-password')
-  async sendEmailGet(@Body() resetPassword: ResetPasswordUserDto) {
+  async sendEmailGet(@Body() resetPassword: ResetPasswordUserDto, @Res() response: Response) {
+
+    let user = await this.userService.findOneUserByEmail(resetPassword.email);
+    if (!user) {
+      return response.status(400).json({ msg: "El correo indicado no está asociado a ninguno de nuestros contribuyentes" });
+    }
+
+    // Reset encrypt password
+    let password = Math.random().toString(36).slice(-8);
+    const salt = bcrypt.genSaltSync();
+    const hashPassword = bcrypt.hashSync(password, salt);
+    user.password = hashPassword;
+
     let req = {
       body: {
-        contirbutor_email: 'NAASTECNOLOGIA@GMAIL.COM',
-        contirbutor_user: 'NelmerAyala@gmail.com',
-        contirbutor_names: 'Nelmer Ayala',
-        contirbutor_password: 'Nelmer Ayala',
+        contirbutor_email: user.email,
+        contirbutor_names: `${user.lastname} ${user.firstname}`,
+        contirbutor_password: password,
+        subject_email: 'Recuperación de contraseña',
       }
     }
-    return await sendEmail(req);
+    let resp = await sendEmail(req);
+    if (resp.status === 200)
+      return response.status(200).json(resp);
+    else
+      return response.status(400).json(resp);
   }
 
-  // @Get('data-profile')
-  // getDataProfile(req: any) {
-  //   return this.userService.findOneUser(req.id);
-  // }
 }
 
 // import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';

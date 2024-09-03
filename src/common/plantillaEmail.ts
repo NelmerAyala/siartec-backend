@@ -1,6 +1,6 @@
 const plantillaEmail = async (req: any) => {
 
-    return `<html>
+  return `<html>
 
 <head>
   <meta name="encoding" charset="utf-8" />
@@ -16,7 +16,7 @@ const plantillaEmail = async (req: any) => {
       <header>
         <center>
           <div>
-            <img style="width: 100%;height: auto;"
+            <img style="width: 25%;height: auto;"
               src="https://github.com/NelmerAyala/public-resources/blob/main/logo.png?raw=true">
           </div>
         </center>
@@ -37,7 +37,7 @@ const plantillaEmail = async (req: any) => {
                 APLICACIÓN WEB Y PODER REALIZAR TODAS SUS GESTIONES, LOS DATOS DE SU USUARIO SE ADJUNTAN A
                 CONTINUACIÓN: </b></p>
         <br><br>
-        NOMBRE DE USUARIO: ${req.body.contirbutor_user}<BR>
+        CORREO: ${req.body.contirbutor_email}<BR>
         CONTRASEÑA DE USUARIO: ${req.body.contirbutor_password}<BR>
         <br><br><br>
         <b>SUGERENCIA: </b> CAMBIAR LA CONTRASEÑA ASIGNADA POR EL SISTEMA.
@@ -66,6 +66,6 @@ const plantillaEmail = async (req: any) => {
 </body>
 
 </html>`
-  };
-  
-  export default plantillaEmail;
+};
+
+export default plantillaEmail;

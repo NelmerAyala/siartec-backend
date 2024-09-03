@@ -15,9 +15,8 @@ export const sendEmail = async (
     let mailOptions = {
       from: process.env.MAIL_USERNAME,
       to: args.body.contirbutor_email,
-      subject: process.env.SUBJECT_EMAIL + " - " + args.body.contirbutor_names,
+      subject: args.body.subject_email + " - " + args.body.contirbutor_names,
       html: body,
- 
     };
 
     let transporter = await createTransporter();
@@ -25,17 +24,15 @@ export const sendEmail = async (
       if (err) {
         console.log("Error " + err);
         result = 'Error ' + err;
+        return { status: 400, msg: result }
       } else {
         console.log("Email sent successfully - ok");
         result = 'Email sent successfully';
+        return { status: 200, msg: result }
       }
     });
-
-    console.log({ body: result });
-    return { body: result }
   } catch (error) {
     console.log({ error });
-    // res.status(500).json({ errors: { msg: "Contacte al Administrador." } });
     return { error }
   }
 };
