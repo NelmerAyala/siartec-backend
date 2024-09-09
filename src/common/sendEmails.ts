@@ -8,7 +8,6 @@ export const sendEmail = async (
   // res: Response,
   args: any
 ): Promise<any> => {
-  let result: any
   try {
     let body = await plantillaEmail(args);
 
@@ -20,17 +19,18 @@ export const sendEmail = async (
     };
 
     let transporter = await createTransporter();
-    transporter.sendMail(mailOptions, function (err: any, data: any) {
-      if (err) {
-        console.log("Error " + err);
-        result = 'Error ' + err;
-        return { status: 400, msg: result }
-      } else {
+    return new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (err: any, info: any) => {
+        if (err) {
+          console.log("Error " + err);
+          reject({ status: 400, msg: 'Error ' + err })
+        }
+        console.log("data in send email: " + JSON.stringify(info))
         console.log("Email sent successfully - ok");
-        result = 'Correo electrónico enviado satisfactoriamente';
-      }
-    });
-    return { status: 200, msg: result }
+        resolve({ status: 200, msg: 'Correo electrónico enviado satisfactoriamente', info })
+      });
+    })
+
   } catch (error) {
     console.log({ error });
     return { error }

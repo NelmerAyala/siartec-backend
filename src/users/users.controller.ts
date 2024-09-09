@@ -123,6 +123,8 @@ export class UsersController {
       }
     }
     let resp = await sendEmail(req);
+    console.log("resp")
+    console.log(JSON.stringify(resp))
     resp.msg === null || resp.msg === "" ? resp.msg = 'Correo electrónico enviado satisfactoriamente' : console.log(resp.msg)
     if (resp.status === 200)
       return response.status(200).json(resp);
