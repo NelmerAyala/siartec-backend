@@ -1,10 +1,10 @@
-import { Parishes } from 'src/parishes/entities/parish.entity';
 import { Status } from 'src/status/entities/status.entity';
+import { Transaction } from 'src/transactions/entities/transaction.entity';
 import { Users } from 'src/users/entities/user.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Municipalities {
+export class TransactionsType {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -29,16 +29,16 @@ export class Municipalities {
   /* 
     Table audit columns foreign keys 
   */
-  @ManyToOne(() => Status, (statu) => statu.id_status_municipality_fk)
+  @ManyToOne(() => Status, (statu) => statu.id_status_transaction_type_fk)
   status: Status
 
-  @ManyToOne(() => Users, (user) => user.create_by_municipality_fk)
+  @ManyToOne(() => Users, (user) => user.create_by_transaction_type_fk)
   created_by: Users
 
-  @ManyToOne(() => Users, (user) => user.updated_by_municipality_fk)
+  @ManyToOne(() => Users, (user) => user.updated_by_transaction_type_fk)
   updated_by: Users
 
-  @ManyToOne(() => Users, (user) => user.deleted_by_municipality_fk)
+  @ManyToOne(() => Users, (user) => user.deleted_by_transaction_type_fk)
   deleted_by: Users
 
   /* 
@@ -49,12 +49,6 @@ export class Municipalities {
   /* 
     Relationship
   */
-
-  // @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.privilege)
-  // id_roles_privileges_privilege_fk: RolesPrivilege[];
-
-  @OneToMany(() => Parishes, parish => parish.municipality)
-  id_parish_municipality_fk: Parishes[];
-
-
+  @OneToMany(() => Transaction, (transaction) => transaction.transaction_type)
+  id_transaction_type_transaction_fk: Transaction[]
 }

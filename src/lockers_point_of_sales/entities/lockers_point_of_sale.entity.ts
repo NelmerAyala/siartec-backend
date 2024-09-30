@@ -1,10 +1,12 @@
-import { Parishes } from 'src/parishes/entities/parish.entity';
+import { BankAccount } from 'src/bank_accounts/entities/bank_account.entity';
+import { Locker } from 'src/lockers/entities/locker.entity';
+import { PointOfSale } from 'src/point_of_sales/entities/point_of_sale.entity';
 import { Status } from 'src/status/entities/status.entity';
 import { Users } from 'src/users/entities/user.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Municipalities {
+export class LockersPointOfSale {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -29,32 +31,30 @@ export class Municipalities {
   /* 
     Table audit columns foreign keys 
   */
-  @ManyToOne(() => Status, (statu) => statu.id_status_municipality_fk)
+  @ManyToOne(() => Status, (statu) => statu.id_status_locker_point_of_sale_fk)
   status: Status
 
-  @ManyToOne(() => Users, (user) => user.create_by_municipality_fk)
+  @ManyToOne(() => Users, (user) => user.create_by_locker_point_of_sale_fk)
   created_by: Users
 
-  @ManyToOne(() => Users, (user) => user.updated_by_municipality_fk)
+  @ManyToOne(() => Users, (user) => user.updated_by_locker_point_of_sale_fk)
   updated_by: Users
 
-  @ManyToOne(() => Users, (user) => user.deleted_by_municipality_fk)
+  @ManyToOne(() => Users, (user) => user.deleted_by_locker_point_of_sale_fk)
   deleted_by: Users
 
   /* 
     Table foreign keys columns
   */
+  @ManyToOne(() => Locker, (locker) => locker.id_locker_point_of_sale_locker_fk)
+  locker: Locker
 
+  @ManyToOne(() => PointOfSale, (locker) => locker.id_point_of_sale_point_of_sale_locker_fk)
+  point_of_sale: PointOfSale
 
   /* 
     Relationship
   */
-
-  // @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.privilege)
-  // id_roles_privileges_privilege_fk: RolesPrivilege[];
-
-  @OneToMany(() => Parishes, parish => parish.municipality)
-  id_parish_municipality_fk: Parishes[];
 
 
 }

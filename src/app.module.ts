@@ -16,6 +16,20 @@ import { MunicipalitiesModule } from './municipalities/municipalities.module';
 import { AuditsModule } from './audits/audits.module';
 import { AuditableProcessesModule } from './auditable_processes/auditable_processes.module';
 import { AuditsDetailsModule } from './audits_details/audits_details.module';
+import { ProceduresModule } from './procedures/procedures.module';
+import { EntitiesModule } from './entities/entities.module';
+import { SubentitiesModule } from './subentities/subentities.module';
+import { TaxStampsModule } from './tax_stamps/tax_stamps.module';
+import { PaymentsModule } from './payments/payments.module';
+import { TaxStampsPaymentsModule } from './tax_stamps_payments/tax_stamps_payments.module';
+import { BanksModule } from './banks/banks.module';
+import { BankAccountsModule } from './bank_accounts/bank_accounts.module';
+import { TransactionsTypesModule } from './transactions_types/transactions_types.module';
+import { TransactionsModule } from './transactions/transactions.module';
+import { LockersModule } from './lockers/lockers.module';
+import { BranchModule } from './branch/branch.module';
+import { PointOfSalesModule } from './point_of_sales/point_of_sales.module';
+import { LockersPointOfSalesModule } from './lockers_point_of_sales/lockers_point_of_sales.module';
 
 @Module({
   imports: [
@@ -38,7 +52,21 @@ import { AuditsDetailsModule } from './audits_details/audits_details.module';
     MunicipalitiesModule,
     AuditsModule,
     AuditableProcessesModule,
-    AuditsDetailsModule
+    AuditsDetailsModule,
+    ProceduresModule,
+    EntitiesModule,
+    SubentitiesModule,
+    TaxStampsModule,
+    PaymentsModule,
+    TaxStampsPaymentsModule,
+    BanksModule,
+    BankAccountsModule,
+    TransactionsTypesModule,
+    TransactionsModule,
+    LockersModule,
+    BranchModule,
+    PointOfSalesModule,
+    LockersPointOfSalesModule
   ],
   providers: [IsUniqueConstraint]
 })
