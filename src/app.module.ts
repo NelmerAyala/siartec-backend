@@ -30,6 +30,8 @@ import { LockersModule } from './lockers/lockers.module';
 import { BranchModule } from './branch/branch.module';
 import { PointOfSalesModule } from './point_of_sales/point_of_sales.module';
 import { LockersPointOfSalesModule } from './lockers_point_of_sales/lockers_point_of_sales.module';
+import { StatesModule } from './states/states.module';
+import { CountryModule } from './country/country.module';
 
 @Module({
   imports: [
@@ -66,7 +68,9 @@ import { LockersPointOfSalesModule } from './lockers_point_of_sales/lockers_poin
     LockersModule,
     BranchModule,
     PointOfSalesModule,
-    LockersPointOfSalesModule
+    LockersPointOfSalesModule,
+    StatesModule,
+    CountryModule
   ],
   providers: [IsUniqueConstraint]
 })

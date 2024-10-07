@@ -3,6 +3,7 @@ import { BankAccount } from 'src/bank_accounts/entities/bank_account.entity';
 import { Bank } from 'src/banks/entities/bank.entity';
 import { Branch } from 'src/branch/entities/branch.entity';
 import { ContributorsType } from 'src/contributors_types/entities/contributors_type.entity';
+import { Country } from 'src/country/entities/country.entity';
 import { Entities } from 'src/entities/entities/entity.entity';
 import { Locker } from 'src/lockers/entities/locker.entity';
 import { LockersPointOfSale } from 'src/lockers_point_of_sales/entities/lockers_point_of_sale.entity';
@@ -14,6 +15,7 @@ import { Privilege } from 'src/privileges/entities/privilege.entity';
 import { Procedure } from 'src/procedures/entities/procedure.entity';
 import { Role } from 'src/roles/entities/role.entity';
 import { RolesPrivilege } from 'src/roles_privileges/entities/roles_privilege.entity';
+import { State } from 'src/states/entities/state.entity';
 import { Subentity } from 'src/subentities/entities/subentity.entity';
 import { TaxStamp } from 'src/tax_stamps/entities/tax_stamp.entity';
 import { TaxStampsPayment } from 'src/tax_stamps_payments/entities/tax_stamps_payment.entity';
@@ -159,6 +161,14 @@ export class Status {
   // -- Locker Point Of Sale
   @OneToMany(() => LockersPointOfSale, (locker_point_of_sale) => locker_point_of_sale.status)
   id_status_locker_point_of_sale_fk: LockersPointOfSale[]
+
+  // -- States
+  @OneToMany(() => State, (state) => state.status)
+  id_status_states_fk: State[]
+
+  // -- Country
+  @OneToMany(() => Country, (country) => country.status)
+  id_status_country_fk: Country[]
 
 
 }
