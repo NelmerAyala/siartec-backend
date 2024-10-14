@@ -55,7 +55,7 @@ export class UsersService {
    * @returns promise of user
    */
   findOneUser(id: number): Promise<Users> {
-    return this.userRepository.findOneBy({ id });
+    return this.userRepository.findOne({ where: { id }, relations: { contributor_type: true } });
   }
 
   /**
