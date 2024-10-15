@@ -14,8 +14,9 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordUserDto, UpdateUserDto } from './dto/update-user.dto';
 import { sendEmail } from 'src/common/sendEmails';
-import { response, Response } from 'express';
+import { Response } from 'express';
 import { ResetPasswordUserDto } from './dto/reset-password-user.dto';
+import { ContributorsTypesService } from 'src/contributors_types/contributors_types.service';
 
 /**
  * whatever the string pass in controller decorator it will be appended to
@@ -25,7 +26,7 @@ import { ResetPasswordUserDto } from './dto/reset-password-user.dto';
  */
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) { }
+  constructor(private readonly userService: UsersService, private readonly contributorstypesService: ContributorsTypesService) { }
 
   /**
    * Post decorator represents method of request as we have used post decorator the method
@@ -34,12 +35,14 @@ export class UsersController {
    * POST http://localhost:3000/user
    */
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    // const min = 1;
-    // const max = 100000;
-    // const saltRounds = Math.floor(Math.random() * (max - min) + min);
-    // createUserDto.password = bcrypt.hashSync(createUserDto.password, saltRounds);
-    return this.userService.createUser(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto, @Res() response: Response) {
+
+    const contributor_type = await this.contributorstypesService.findOne(createUserDto.contributor_type.id);
+    createUserDto.role = contributor_type.hasOwnProperty("role") ? contributor_type.role : undefined;
+
+    if (createUserDto.role === undefined) return response.status(400).json({ msg: "El tipo de contribuyente seleccionado no tiene un rol por defecto asignado." });
+
+    return await this.userService.createUser(createUserDto);
   }
 
   /**
@@ -117,7 +120,7 @@ export class UsersController {
     let req = {
       body: {
         contirbutor_email: user.email,
-        contirbutor_names: `${user.lastname} ${user.firstname}`,
+        contirbutor_names: `${user.fullname}`,
         contirbutor_password: password,
         subject_email: 'Recuperación de contraseña',
       }

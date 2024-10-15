@@ -3,6 +3,7 @@ import {
   IsDate,
   IsDateString,
   IsEmail,
+  IsEmpty,
   IsEnum,
   IsInt,
   IsNotEmpty,
@@ -25,15 +26,11 @@ const passwordRegEx =
 
 
 export class CreateUserDto {
-  @IsString()
-  @MinLength(2, { message: 'Firstname must have atleast 2 characters.' })
-  @IsNotEmpty()
-  firstname: string;
 
   @IsString()
-  @MinLength(2, { message: 'Lastname must have atleast 2 characters.' })
+  @MinLength(2, { message: 'Fullname must have atleast 2 characters.' })
   @IsNotEmpty()
-  lastname: string;
+  fullname: string;
 
   @IsUnique({ tableName: 'users', column: 'email' })
   @IsNotEmpty()
@@ -87,12 +84,12 @@ export class CreateUserDto {
   @IsOptional()
   last_connection: Date;
 
-  @IsNumber()
+  // @IsNumber()
   @IsNotEmpty()
   contributor_type: ContributorsType;
 
-  @IsNumber()
-  @IsNotEmpty()
+  // @IsNumber()
+  @IsEmpty()
   role: Role;
 
 

@@ -25,8 +25,7 @@ export class UsersService {
    */
   async createUser(createUserDto: CreateUserDto): Promise<Users> {
     const user: Users = new Users();
-    user.firstname = createUserDto.firstname;
-    user.lastname = createUserDto.lastname;
+    user.fullname = createUserDto.fullname;
     user.email = createUserDto.email;
     user.password = await hashPassword(createUserDto.password);
     user.identity_document_letter = createUserDto.identity_document_letter;
@@ -76,8 +75,7 @@ export class UsersService {
    */
   updateUser(id: number, updateUserDto: UpdateUserDto): Promise<Users> {
     const user: Users = new Users();
-    user.firstname = updateUserDto.firstname;
-    user.lastname = updateUserDto.lastname;
+    user.fullname = updateUserDto.fullname;
     user.email = updateUserDto.email;
     user.identity_document_letter = updateUserDto.identity_document_letter;
     user.identity_document = updateUserDto.identity_document;

@@ -46,13 +46,19 @@ export class ContributorsType {
 
 
   /* 
+    Table foreign keys columns
+  */
+  @ManyToOne(() => Role, (role) => role.id_roles_contributor_type_fk)
+  role: Role
+
+
+  /* 
     Relationship
   */
   @OneToMany(() => Status, (statu) => statu.status)
   id_contributor_type_status_fk: Status[]
   @OneToMany(() => Users, (user) => user.status)
   id_contributor_type_user_fk: Users[]
-  @OneToMany(() => Role, (role) => role.status)
-  id_contributor_type_role_fk: Role[]
+
 
 }

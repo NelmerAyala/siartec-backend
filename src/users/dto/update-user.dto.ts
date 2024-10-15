@@ -23,15 +23,11 @@ import { Users } from '../entities/user.entity';
 const passwordRegEx = ``;
 
 export class UpdateUserDto {
-  @IsString()
-  @MinLength(2, { message: 'Firstname must have atleast 2 characters.' })
-  @IsNotEmpty()
-  firstname: string;
 
   @IsString()
-  @MinLength(2, { message: 'Lastname must have atleast 2 characters.' })
+  @MinLength(2, { message: 'Fullname must have atleast 2 characters.' })
   @IsNotEmpty()
-  lastname: string;
+  fullname: string;
 
   @IsUnique({ tableName: 'users', column: 'email' })
   @IsNotEmpty()

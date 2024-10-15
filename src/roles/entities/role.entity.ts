@@ -1,3 +1,4 @@
+import { ContributorsType } from 'src/contributors_types/entities/contributors_type.entity';
 import { Privilege } from 'src/privileges/entities/privilege.entity';
 import { RolesPrivilege } from 'src/roles_privileges/entities/roles_privilege.entity';
 import { Status } from 'src/status/entities/status.entity';
@@ -46,7 +47,6 @@ export class Role {
     Table foreign keys columns
   */
 
-
   /* 
     Relationship
   */
@@ -55,5 +55,8 @@ export class Role {
 
   @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.role)
   id_roles_privileges_role_fk: RolesPrivilege[];
+
+  @OneToMany(() => ContributorsType, contributor => contributor.role)
+  id_roles_contributor_type_fk: ContributorsType[];
 
 }
