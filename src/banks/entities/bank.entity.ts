@@ -8,11 +8,17 @@ export class Bank {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 10 })
   code: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', length: 150 })
   description: string;
+
+  @Column({ type: 'varchar', length: 10, nullable: true})
+  code_bank: string;
+
+  @Column({ type: 'varchar',length: 150, nullable: true })
+  description_bank: string;
 
   /* 
     Table audit columns 
