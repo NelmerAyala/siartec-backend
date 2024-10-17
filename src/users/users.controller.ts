@@ -42,7 +42,8 @@ export class UsersController {
 
     if (createUserDto.role === undefined) return response.status(400).json({ msg: "El tipo de contribuyente seleccionado no tiene un rol por defecto asignado." });
 
-    return await this.userService.createUser(createUserDto);
+    const user = await this.userService.createUser(createUserDto);
+    return response.status(200).json(user)
   }
 
   /**

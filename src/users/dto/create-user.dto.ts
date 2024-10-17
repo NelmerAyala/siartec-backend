@@ -20,6 +20,7 @@ import {
 import { IsUnique } from '../../utils/validation/is-unique';
 import { ContributorsType } from 'src/contributors_types/entities/contributors_type.entity';
 import { Role } from 'src/roles/entities/role.entity';
+import { Parishes } from 'src/parishes/entities/parish.entity';
 
 const passwordRegEx =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
@@ -91,6 +92,9 @@ export class CreateUserDto {
   // @IsNumber()
   @IsEmpty()
   role: Role;
+
+  @IsNotEmpty()
+  parish: Parishes;
 
 
   /* 
