@@ -19,6 +19,9 @@ import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
 import { IsUnique } from '../../utils/validation/is-unique';
 import { Users } from '../entities/user.entity';
+import { Role } from 'src/roles/entities/role.entity';
+import { Parishes } from 'src/parishes/entities/parish.entity';
+import { ContributorsType } from 'src/contributors_types/entities/contributors_type.entity';
 
 const passwordRegEx = ``;
 
@@ -29,7 +32,7 @@ export class UpdateUserDto {
   @IsNotEmpty()
   fullname: string;
 
-  @IsUnique({ tableName: 'users', column: 'email' })
+  // @IsUnique({ tableName: 'users', column: 'email' })
   @IsNotEmpty()
   @IsEmail()
   email: string;
@@ -63,6 +66,12 @@ export class UpdateUserDto {
   @Length(15, 15, { message: 'phone_number must have 15 characters.' })
   @IsNotEmpty()
   phone_number: string;
+
+  @IsNotEmpty()
+  contributor_type: ContributorsType;
+
+  @IsNotEmpty()
+  parish: Parishes;
 
 }
 

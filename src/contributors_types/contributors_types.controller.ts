@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res } from '@nestjs/common';
 import { ContributorsTypesService } from './contributors_types.service';
 import { CreateContributorsTypeDto } from './dto/create-contributors_type.dto';
 import { UpdateContributorsTypeDto } from './dto/update-contributors_type.dto';
+import { Response } from 'express';
+import { StatusService } from 'src/status/status.service';
 
 @Controller('contributors-types')
 export class ContributorsTypesController {
-  constructor(private readonly contributorsTypesService: ContributorsTypesService) {}
+  constructor(private readonly contributorsTypesService: ContributorsTypesService, private readonly statusService: StatusService) { }
 
   @Post()
   create(@Body() createContributorsTypeDto: CreateContributorsTypeDto) {
@@ -13,8 +15,12 @@ export class ContributorsTypesController {
   }
 
   @Get()
-  findAll() {
-    return this.contributorsTypesService.findAll();
+  async findAll(@Res() response: Response) {
+    const status_active = await this.statusService.findOneByCode(process.env.STATUS_ACTIVE);
+    if (!status_active) return response.status(400).json({ msg: `No existe un estatus definido con el código *${process.env.STATUS_ACTIVE}* para definir a los registros activos.` });
+
+    const contributors_type = await this.contributorsTypesService.findAll(status_active);
+    return response.status(200).json(contributors_type)
   }
 
   @Get(':id')

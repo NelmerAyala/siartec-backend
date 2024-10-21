@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Res } from '@nestjs/common';
 import { EntitiesService } from './entities.service';
 import { CreateEntityDto } from './dto/create-entity.dto';
 import { UpdateEntityDto } from './dto/update-entity.dto';
+import { StatusService } from 'src/status/status.service';
+import { Response } from 'express';
 
 @Controller('entities')
 export class EntitiesController {
-  constructor(private readonly entitiesService: EntitiesService) {}
+  constructor(private readonly entitiesService: EntitiesService, private readonly statusService: StatusService) { }
 
   @Post()
   create(@Body() createEntityDto: CreateEntityDto) {
@@ -13,8 +15,12 @@ export class EntitiesController {
   }
 
   @Get()
-  findAll() {
-    return this.entitiesService.findAll();
+  async findAll(@Res() response: Response) {
+    const status_active = await this.statusService.findOneByCode(process.env.STATUS_ACTIVE);
+    if (!status_active) return response.status(400).json({ msg: `No existe un estatus definido con el código *${process.env.STATUS_ACTIVE}* para definir a los registros activos.` });
+
+    const entities = await this.entitiesService.findAll(status_active);
+    return response.status(200).json(entities)
   }
 
   @Get(':id')

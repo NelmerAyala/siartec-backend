@@ -17,8 +17,8 @@ export class MunicipalitiesController {
 
   @Get()
   async findAll(@Res() response: Response) {
-    const status_active = await this.statusService.findOneByCode('ACTIVE');
-    if (!status_active) return response.status(400).json({ msg: "El tipo de contribuyente seleccionado no tiene un rol por defecto asignado." });
+    const status_active = await this.statusService.findOneByCode(process.env.STATUS_ACTIVE);
+    if (!status_active) return response.status(400).json({ msg: `No existe un estatus definido con el código *${process.env.STATUS_ACTIVE}* para definir a los registros activos.` });
 
     const municipalities = await this.municipalitiesService.findAll(status_active);
     return response.status(200).json(municipalities)
@@ -31,9 +31,9 @@ export class MunicipalitiesController {
 
   @Get('state/:id')
   async findByState(@Param('id') id: number, @Res() response: Response) {
-    const STATUS = 'ACTIVE';
-    const status_active = await this.statusService.findOneByCode(STATUS);
-    if (!status_active) return response.status(400).json({ msg: `No existe un estatus ${STATUS}.` });
+
+    const status_active = await this.statusService.findOneByCode(process.env.STATUS_ACTIVE);
+    if (!status_active) return response.status(400).json({ msg: `No existe un estatus definido con el código *${process.env.STATUS_ACTIVE}* para definir a los registros activos.` });
 
     const municipalities = await this.municipalitiesService.findByState(id, status_active);
     return response.status(200).json(municipalities)

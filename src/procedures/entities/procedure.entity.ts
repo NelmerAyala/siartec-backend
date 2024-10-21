@@ -17,6 +17,12 @@ export class Procedure {
   @Column({ type: 'varchar' })
   description: string;
 
+  @Column({ type: 'bool', default: false })
+  is_specific_value: boolean;
+
+  @Column({ type: 'numeric', nullable: true })
+  value: number;
+
   /* 
     Table audit columns 
   */
@@ -47,8 +53,8 @@ export class Procedure {
   /* 
     Table foreign keys columns
   */
-  @ManyToOne(() => Subentity, (subentity) => subentity.id_procedure_subentity_fk)
-  subentity: Subentity
+  @ManyToOne(() => Entities, (subentity) => subentity.id_procedure_entity_fk)
+  entity: Entities
 
   /* 
     Relationship

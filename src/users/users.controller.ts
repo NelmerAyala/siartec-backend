@@ -72,8 +72,17 @@ export class UsersController {
    * PATCH http://localhost:3000/user/:id
    */
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.updateUser(+id, updateUserDto);
+  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @Res() response: Response) {
+    const email_exist = await this.userService.findOneUserByEmail(updateUserDto.email);
+    console.log("email_exist: " + JSON.stringify(email_exist))
+    console.log("email_exist id: " + typeof email_exist.id)
+    console.log("id: " + typeof id)
+
+    if (email_exist.hasOwnProperty("id") && email_exist.id !== Number(id)) {
+      return response.status(400).json({ message: `El correo electrónico ${updateUserDto.email} ya existe` })
+    }
+    const user = await this.userService.updateUser(+id, updateUserDto);
+    return response.status(200).json({ user });
   }
 
   /**
@@ -137,38 +146,3 @@ export class UsersController {
   }
 
 }
-
-// import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-// import { UsersService } from './users.service';
-// import { CreateUserDto } from './dto/create-user.dto';
-// import { UpdateUserDto } from './dto/update-user.dto';
-
-// @Controller('users')
-// export class UsersController {
-//   constructor(private readonly usersService: UsersService) {}
-
-//   @Post()
-//   create(@Body() createUserDto: CreateUserDto) {
-//     return this.usersService.create(createUserDto);
-//   }
-
-//   @Get()
-//   findAll() {
-//     return this.usersService.findAll();
-//   }
-
-//   @Get(':id')
-//   findOne(@Param('id') id: string) {
-//     return this.usersService.findOne(+id);
-//   }
-
-//   @Patch(':id')
-//   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-//     return this.usersService.update(+id, updateUserDto);
-//   }
-
-//   @Delete(':id')
-//   remove(@Param('id') id: string) {
-//     return this.usersService.remove(+id);
-//   }
-// }

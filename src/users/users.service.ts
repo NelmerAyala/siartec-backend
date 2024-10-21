@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto, UpdatePasswordUserDto } from './dto/update-user.dto';
 import { Users } from './entities/user.entity';
@@ -55,7 +55,7 @@ export class UsersService {
    * @returns promise of user
    */
   findOneUser(id: number): Promise<Users> {
-    return this.userRepository.findOne({ where: { id }, relations: { contributor_type: true } });
+    return this.userRepository.findOne({ where: { id }, relations: { contributor_type: true, parish: { municipality: { state: true } }, role: { id_roles_privileges_role_fk: { privilege: true } }, } });
   }
 
   /**
@@ -84,6 +84,8 @@ export class UsersService {
     user.constitution_date = updateUserDto.constitution_date ? updateUserDto.constitution_date : null;
     user.address = updateUserDto.address;
     user.phone_number = updateUserDto.phone_number;
+    user.parish = updateUserDto.parish;
+    user.contributor_type = updateUserDto.contributor_type;
 
     user.id = id;
     return this.userRepository.save(user);

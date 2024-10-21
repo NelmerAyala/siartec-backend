@@ -4,6 +4,7 @@ import { UpdateContributorsTypeDto } from './dto/update-contributors_type.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ContributorsType } from './entities/contributors_type.entity';
 import { Repository } from 'typeorm';
+import { Status } from 'src/status/entities/status.entity';
 
 @Injectable()
 export class ContributorsTypesService {
@@ -18,8 +19,8 @@ export class ContributorsTypesService {
     return 'This action adds a new contributorsType';
   }
 
-  findAll() {
-    return `This action returns all contributorsTypes`;
+  findAll(status: Status[]) {
+    return this.contributorTypeRepository.find({ where: { status: status["id"] } });
   }
 
   findOne(id: number) {

@@ -1,4 +1,5 @@
 import { Parishes } from 'src/parishes/entities/parish.entity';
+import { Procedure } from 'src/procedures/entities/procedure.entity';
 import { Status } from 'src/status/entities/status.entity';
 import { Subentity } from 'src/subentities/entities/subentity.entity';
 import { Users } from 'src/users/entities/user.entity';
@@ -57,5 +58,7 @@ export class Entities {
   @OneToMany(() => Subentity, subentity => subentity.entity)
   id_subentity_entity_fk: Subentity[];
 
+  @OneToMany(() => Procedure, procedure => procedure.entity)
+  id_procedure_entity_fk: Procedure[];
 
 }
