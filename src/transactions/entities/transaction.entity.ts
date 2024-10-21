@@ -1,4 +1,5 @@
 import { BankAccount } from 'src/bank_accounts/entities/bank_account.entity';
+import { ExternalRequest } from 'src/external_requests/entities/external_request.entity';
 import { Payment } from 'src/payments/entities/payment.entity';
 import { Status } from 'src/status/entities/status.entity';
 import { TransactionsType } from 'src/transactions_types/entities/transactions_type.entity';
@@ -61,6 +62,8 @@ export class Transaction {
   /* 
     Relationship
   */
-
+    @OneToMany(() => ExternalRequest, request => request.transaction)
+    id_transaction_external_request_fk: ExternalRequest[];
+    
 
 }

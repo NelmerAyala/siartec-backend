@@ -7,6 +7,7 @@ import { Branch } from 'src/branch/entities/branch.entity';
 import { ContributorsType } from 'src/contributors_types/entities/contributors_type.entity';
 import { Country } from 'src/country/entities/country.entity';
 import { Entities } from 'src/entities/entities/entity.entity';
+import { ExternalRequest } from 'src/external_requests/entities/external_request.entity';
 import { Locker } from 'src/lockers/entities/locker.entity';
 import { LockersPointOfSale } from 'src/lockers_point_of_sales/entities/lockers_point_of_sale.entity';
 import { Municipalities } from 'src/municipalities/entities/municipality.entity';
@@ -24,6 +25,7 @@ import { TaxStamp } from 'src/tax_stamps/entities/tax_stamp.entity';
 import { TaxStampsPayment } from 'src/tax_stamps_payments/entities/tax_stamps_payment.entity';
 import { Transaction } from 'src/transactions/entities/transaction.entity';
 import { TransactionsType } from 'src/transactions_types/entities/transactions_type.entity';
+import { TypesExternalRequest } from 'src/types_external_requests/entities/types_external_request.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
@@ -298,7 +300,7 @@ export class Users {
   @OneToMany(() => TaxStampsPayment, (tax_stamp_payment) => tax_stamp_payment.deleted_by)
   deleted_by_tax_stamp_payment_fk: TaxStampsPayment[]
 
-  // -- Tax Stamp Payment
+  // -- Point of Sales
   @OneToMany(() => PointOfSale, (point_of_sale) => point_of_sale.created_by)
   create_by_point_of_sale_fk: PointOfSale[]
   @OneToMany(() => PointOfSale, (point_of_sale) => point_of_sale.updated_by)
@@ -329,5 +331,22 @@ export class Users {
   updated_by_country_fk: Country[]
   @OneToMany(() => Country, (country) => country.deleted_by)
   deleted_by_country_fk: Country[]
+
+
+  // -- Type External Request
+  @OneToMany(() => TypesExternalRequest, (type) => type.created_by)
+  create_by_type_external_request_fk: TypesExternalRequest[]
+  @OneToMany(() => TypesExternalRequest, (type) => type.updated_by)
+  updated_by_type_external_request_fk: TypesExternalRequest[]
+  @OneToMany(() => TypesExternalRequest, (type) => type.deleted_by)
+  deleted_by_type_external_request_fk: TypesExternalRequest[]
+
+  // -- External Request
+  @OneToMany(() => ExternalRequest, (external_request) => external_request.created_by)
+  create_by_external_request_fk: ExternalRequest[]
+  @OneToMany(() => ExternalRequest, (external_request) => external_request.updated_by)
+  updated_by_external_request_fk: ExternalRequest[]
+  @OneToMany(() => ExternalRequest, (external_request) => external_request.deleted_by)
+  deleted_by_external_request_fk: ExternalRequest[]
 
 }

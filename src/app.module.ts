@@ -32,6 +32,8 @@ import { PointOfSalesModule } from './point_of_sales/point_of_sales.module';
 import { LockersPointOfSalesModule } from './lockers_point_of_sales/lockers_point_of_sales.module';
 import { StatesModule } from './states/states.module';
 import { CountryModule } from './country/country.module';
+import { TypesExternalRequestsModule } from './types_external_requests/types_external_requests.module';
+import { ExternalRequestsModule } from './external_requests/external_requests.module';
 
 @Module({
   imports: [
@@ -70,7 +72,9 @@ import { CountryModule } from './country/country.module';
     PointOfSalesModule,
     LockersPointOfSalesModule,
     StatesModule,
-    CountryModule
+    CountryModule,
+    TypesExternalRequestsModule,
+    ExternalRequestsModule
   ],
   providers: [IsUniqueConstraint]
 })

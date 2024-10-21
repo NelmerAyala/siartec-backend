@@ -5,6 +5,7 @@ import { Branch } from 'src/branch/entities/branch.entity';
 import { ContributorsType } from 'src/contributors_types/entities/contributors_type.entity';
 import { Country } from 'src/country/entities/country.entity';
 import { Entities } from 'src/entities/entities/entity.entity';
+import { ExternalRequest } from 'src/external_requests/entities/external_request.entity';
 import { Locker } from 'src/lockers/entities/locker.entity';
 import { LockersPointOfSale } from 'src/lockers_point_of_sales/entities/lockers_point_of_sale.entity';
 import { Municipalities } from 'src/municipalities/entities/municipality.entity';
@@ -21,6 +22,7 @@ import { TaxStamp } from 'src/tax_stamps/entities/tax_stamp.entity';
 import { TaxStampsPayment } from 'src/tax_stamps_payments/entities/tax_stamps_payment.entity';
 import { Transaction } from 'src/transactions/entities/transaction.entity';
 import { TransactionsType } from 'src/transactions_types/entities/transactions_type.entity';
+import { TypesExternalRequest } from 'src/types_external_requests/entities/types_external_request.entity';
 import { Users } from 'src/users/entities/user.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
@@ -170,5 +172,12 @@ export class Status {
   @OneToMany(() => Country, (country) => country.status)
   id_status_country_fk: Country[]
 
+  // -- Types External Request
+  @OneToMany(() => TypesExternalRequest, (type) => type.status)
+  id_status_type_external_request_fk: TypesExternalRequest[]
+
+  // -- External Request
+  @OneToMany(() => ExternalRequest, (Request) => Request.status)
+  id_status_external_request_fk: ExternalRequest[]
 
 }
