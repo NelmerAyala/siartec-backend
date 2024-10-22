@@ -78,8 +78,6 @@ export class UsersService {
     const user: Users = new Users();
     user.fullname = updateUserDto.fullname;
     user.email = updateUserDto.email;
-    user.identity_document_letter = updateUserDto.identity_document_letter;
-    user.identity_document = updateUserDto.identity_document;
     user.birthdate = updateUserDto.birthdate;
     user.constitution_date = updateUserDto.constitution_date ? updateUserDto.constitution_date : null;
     user.address = updateUserDto.address;

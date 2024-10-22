@@ -37,15 +37,15 @@ export class UpdateUserDto {
   @IsEmail()
   email: string;
 
-  @IsString()
-  @MaxLength(1, { message: 'Identity document letter must have a maximum of 1 character.' })
-  @IsNotEmpty()
-  identity_document_letter: string;
+  // @IsString()
+  // @MaxLength(1, { message: 'Identity document letter must have a maximum of 1 character.' })
+  // @IsNotEmpty()
+  // identity_document_letter: string;
 
-  @IsString()
-  @MinLength(7, { message: 'Identity document must have atleast 7 characters.' })
-  @IsNotEmpty()
-  identity_document: string;
+  // @IsString()
+  // @MinLength(7, { message: 'Identity document must have atleast 7 characters.' })
+  // @IsNotEmpty()
+  // identity_document: string;
 
   @IsDateString()
   @IsNotEmpty()
