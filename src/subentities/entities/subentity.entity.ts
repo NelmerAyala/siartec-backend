@@ -53,6 +53,8 @@ export class Subentity {
   /* 
     Relationship
   */
-
+  @OneToMany(() => Procedure, procedure => procedure.subentity)
+  id_procedure_subentity_fk: Procedure[];
+    
 
 }

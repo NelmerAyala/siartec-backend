@@ -53,8 +53,8 @@ export class Procedure {
   /* 
     Table foreign keys columns
   */
-  @ManyToOne(() => Entities, (subentity) => subentity.id_procedure_entity_fk)
-  entity: Entities
+  @ManyToOne(() => Subentity, (subentity) => subentity.id_procedure_subentity_fk)
+  subentity: Subentity
 
   /* 
     Relationship

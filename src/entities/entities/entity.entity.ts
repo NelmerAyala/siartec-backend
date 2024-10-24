@@ -51,14 +51,8 @@ export class Entities {
   /* 
     Relationship
   */
-
-  // @OneToMany(() => RolesPrivilege, role_privilege => role_privilege.privilege)
-  // id_roles_privileges_privilege_fk: RolesPrivilege[];
-
   @OneToMany(() => Subentity, subentity => subentity.entity)
   id_subentity_entity_fk: Subentity[];
 
-  @OneToMany(() => Procedure, procedure => procedure.entity)
-  id_procedure_entity_fk: Procedure[];
 
 }

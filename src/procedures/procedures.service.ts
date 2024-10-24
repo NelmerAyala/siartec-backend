@@ -27,8 +27,8 @@ export class ProceduresService {
     return `This action returns a #${id} procedure`;
   }
 
-  findByEntity(entity: number, status: Status[]) {
-    return this.procedureRepository.find({ where: { entity: { id: entity }, status: status["id"] } });
+  findBySubentity(subentity: number, status: Status[]) {
+    return this.procedureRepository.find({ where: { subentity: { id: subentity }, status: status["id"] } });
   }
 
   update(id: number, updateProcedureDto: UpdateProcedureDto) {

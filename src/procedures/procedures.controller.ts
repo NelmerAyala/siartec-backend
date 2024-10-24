@@ -24,13 +24,13 @@ export class ProceduresController {
     return this.proceduresService.findOne(+id);
   }
 
-  @Get('entity/:id')
+  @Get('subentity/:id')
   async findByEntity(@Param('id') id: number, @Res() response: Response) {
 
     const status_active = await this.statusService.findOneByCode(process.env.STATUS_ACTIVE);
     if (!status_active) return response.status(400).json({ msg: `No existe un estatus definido con el código *${process.env.STATUS_ACTIVE}* para definir a los registros activos.` });
 
-    const procedures = await this.proceduresService.findByEntity(id, status_active);
+    const procedures = await this.proceduresService.findBySubentity(id, status_active);
     return response.status(200).json(procedures)
   }
 
