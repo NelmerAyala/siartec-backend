@@ -2,6 +2,8 @@ import { AuditableProcess } from 'src/auditable_processes/entities/auditable_pro
 import { BankAccount } from 'src/bank_accounts/entities/bank_account.entity';
 import { Bank } from 'src/banks/entities/bank.entity';
 import { Branch } from 'src/branch/entities/branch.entity';
+import { CalculationFactor } from 'src/calculation_factor/entities/calculation_factor.entity';
+import { Coin } from 'src/coins/entities/coin.entity';
 import { ContributorsType } from 'src/contributors_types/entities/contributors_type.entity';
 import { Country } from 'src/country/entities/country.entity';
 import { Entities } from 'src/entities/entities/entity.entity';
@@ -179,5 +181,13 @@ export class Status {
   // -- External Request
   @OneToMany(() => ExternalRequest, (Request) => Request.status)
   id_status_external_request_fk: ExternalRequest[]
+
+  // -- Coin
+  @OneToMany(() => Coin, (coin) => coin.status)
+  id_status_coin_fk: Coin[]
+
+  // -- Calculation Factor
+  @OneToMany(() => CalculationFactor, (factor) => factor.status)
+  id_status_calculation_factor_fk: CalculationFactor[]
 
 }

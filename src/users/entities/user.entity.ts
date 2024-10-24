@@ -4,6 +4,8 @@ import { AuditsDetail } from 'src/audits_details/entities/audits_detail.entity';
 import { BankAccount } from 'src/bank_accounts/entities/bank_account.entity';
 import { Bank } from 'src/banks/entities/bank.entity';
 import { Branch } from 'src/branch/entities/branch.entity';
+import { CalculationFactor } from 'src/calculation_factor/entities/calculation_factor.entity';
+import { Coin } from 'src/coins/entities/coin.entity';
 import { ContributorsType } from 'src/contributors_types/entities/contributors_type.entity';
 import { Country } from 'src/country/entities/country.entity';
 import { Entities } from 'src/entities/entities/entity.entity';
@@ -349,4 +351,20 @@ export class Users {
   @OneToMany(() => ExternalRequest, (external_request) => external_request.deleted_by)
   deleted_by_external_request_fk: ExternalRequest[]
 
+  // -- Coin
+  @OneToMany(() => Coin, (coin) => coin.created_by)
+  create_by_coin_fk: Coin[]
+  @OneToMany(() => Coin, (coin) => coin.updated_by)
+  updated_by_coin_fk: Coin[]
+  @OneToMany(() => Coin, (coin) => coin.deleted_by)
+  deleted_by_coin_fk: Coin[]
+
+  // -- Calculation Factor
+  @OneToMany(() => CalculationFactor, (factor) => factor.created_by)
+  create_by_calculation_factor_fk: CalculationFactor[]
+  @OneToMany(() => CalculationFactor, (factor) => factor.updated_by)
+  updated_by_calculation_factor_fk: CalculationFactor[]
+  @OneToMany(() => CalculationFactor, (factor) => factor.deleted_by)
+  deleted_by_calculation_factor_fk: CalculationFactor[]
+  
 }

@@ -1,8 +1,6 @@
-import { Entities } from 'src/entities/entities/entity.entity';
-import { Parishes } from 'src/parishes/entities/parish.entity';
+import { CalculationFactor } from 'src/calculation_factor/entities/calculation_factor.entity';
 import { Procedure } from 'src/procedures/entities/procedure.entity';
 import { Status } from 'src/status/entities/status.entity';
-import { Subentity } from 'src/subentities/entities/subentity.entity';
 import { TaxStampsPayment } from 'src/tax_stamps_payments/entities/tax_stamps_payment.entity';
 import { Users } from 'src/users/entities/user.entity';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
@@ -53,6 +51,9 @@ export class TaxStamp {
 
   @ManyToOne(() => Procedure, (procedure) => procedure.id_tax_stamp_procedure_fk)
   procedure: Procedure
+
+  @ManyToOne(() => CalculationFactor, (calculation_factor) => calculation_factor.id_tax_stamp_calculation_factor_fk)
+  calculation_factor: CalculationFactor
 
   /* 
     Relationship

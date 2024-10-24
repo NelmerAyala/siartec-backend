@@ -1,20 +1,28 @@
-import { Request, Response } from "express";
-// import transporter from "../config/transport";
-import createTransporter from "../config/transport";
-import plantillaEmail from "../common/plantillaEmail";
+import createTransporter from "../../config/transport";
+import resetPassword from "../templates-emails/resetPassword";
+import updateCalculationFactor from "../templates-emails/updateCalculationFactor";
 
 export const sendEmail = async (
-  // req: Request
-  // res: Response,
   args: any
 ): Promise<any> => {
+  let body: string;
   try {
-    let body = await plantillaEmail(args);
+    switch (args.template) {
+      case 'resetPassword':
+        body = await resetPassword(args);
+        break;
+      case 'updateCalculationFactor':
+        body = await updateCalculationFactor(args);
+        break;
+      default:
+        console.log("template not found");
+        break;
+    }
 
     let mailOptions = {
       from: process.env.MAIL_USERNAME,
-      to: args.body.contirbutor_email,
-      subject: args.body.subject_email + " - " + args.body.contirbutor_names,
+      to: args.destination_emails,
+      subject: args.subject_email,
       html: body,
     };
 
@@ -25,7 +33,7 @@ export const sendEmail = async (
           console.log("Error " + err);
           reject({ status: 400, msg: 'Error ' + err })
         }
-        console.log("data in send email: " + JSON.stringify(info))
+        console.log("Data in send email: " + JSON.stringify(info))
         console.log("Email sent successfully - ok");
         resolve({ status: 200, msg: 'Correo electrónico enviado satisfactoriamente', info })
       });

@@ -34,6 +34,8 @@ import { StatesModule } from './states/states.module';
 import { CountryModule } from './country/country.module';
 import { TypesExternalRequestsModule } from './types_external_requests/types_external_requests.module';
 import { ExternalRequestsModule } from './external_requests/external_requests.module';
+import { CoinsModule } from './coins/coins.module';
+import { CalculationFactorModule } from './calculation_factor/calculation_factor.module';
 
 @Module({
   imports: [
@@ -74,7 +76,9 @@ import { ExternalRequestsModule } from './external_requests/external_requests.mo
     StatesModule,
     CountryModule,
     TypesExternalRequestsModule,
-    ExternalRequestsModule
+    ExternalRequestsModule,
+    CoinsModule,
+    CalculationFactorModule
   ],
   providers: [IsUniqueConstraint]
 })

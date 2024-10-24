@@ -1,4 +1,4 @@
-const plantillaEmail = async (req: any) => {
+const plantillaEmail = async (args: any) => {
 
   return `<html>
 
@@ -32,8 +32,8 @@ const plantillaEmail = async (req: any) => {
           gestiones, los datos de su usuario se adjuntan a continuación:
         </p>
         <br /><br />
-        <strong>Correo:</strong> ${req.body.contirbutor_email}<br />
-        <strong>Contraseña de Usuario:</strong> ${req.body.contirbutor_password}<br />
+        <strong>Correo:</strong> ${args.body.contirbutor_email}<br />
+        <strong>Contraseña de Usuario:</strong> ${args.body.contirbutor_password}<br />
         <br /><br /><br />
         <b>Sugerencia: </b> Cambiar contraseñas asignadas por el sistema.
         <br /><br /><br />

@@ -13,10 +13,11 @@ import * as bcrypt from 'bcryptjs';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdatePasswordUserDto, UpdateUserDto } from './dto/update-user.dto';
-import { sendEmail } from 'src/common/sendEmails';
+import { sendEmail } from 'src/common/functions/sendEmails';
 import { Response } from 'express';
 import { ResetPasswordUserDto } from './dto/reset-password-user.dto';
 import { ContributorsTypesService } from 'src/contributors_types/contributors_types.service';
+
 
 /**
  * whatever the string pass in controller decorator it will be appended to
@@ -128,11 +129,12 @@ export class UsersController {
     user.password = hashPassword;
 
     let req = {
+      destination_emails: [user.email],
+      subject_email: `Recuperación de contraseña - ${user.fullname}`,
+      template: EMAILS_TEMPLATES.RESET_PASSWORD.code,
       body: {
-        contirbutor_email: user.email,
         contirbutor_names: `${user.fullname}`,
         contirbutor_password: password,
-        subject_email: 'Recuperación de contraseña',
       }
     }
     let resp = await sendEmail(req);
